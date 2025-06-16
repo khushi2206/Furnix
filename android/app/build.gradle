@@ -1,0 +1,52 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
+
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    namespace "com.example.furnix"
+    compileSdk = 34
+    ndkVersion '21.3.6528147'  // Ensure correct NDK version is set
+
+    defaultConfig {
+        applicationId "com.example.furnix"
+        minSdk = 23
+        targetSdk = 34  // Ensure target SDK is aligned with compileSdk
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source "../.."
+}
+
+dependencies {
+    // Firebase BOM
+    implementation platform("com.google.firebase:firebase-bom:33.9.0")
+
+    // Firebase Services
+    implementation 'com.google.firebase:firebase-analytics-ktx' // Use KTX version
+    implementation 'com.google.firebase:firebase-auth:22.1.1'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx'  // Add FCM for push notifications if needed
+}
